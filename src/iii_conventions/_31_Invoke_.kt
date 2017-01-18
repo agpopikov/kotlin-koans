@@ -1,9 +1,22 @@
 package iii_conventions
 
 import util.TODO
+import java.util.concurrent.atomic.AtomicInteger
 
 
-class Invokable
+class Invokable {
+
+    val count: AtomicInteger = AtomicInteger(0)
+
+    operator fun invoke(): Invokable {
+        count.incrementAndGet()
+        return this
+    }
+
+    fun getNumberOfInvocations(): Int {
+        return count.toInt()
+    }
+}
 
 fun todoTask31(): Nothing = TODO(
     """
@@ -14,6 +27,5 @@ fun todoTask31(): Nothing = TODO(
     references = { invokable: Invokable -> })
 
 fun task31(invokable: Invokable): Int {
-    todoTask31()
-//    return invokable()()()().getNumberOfInvocations()
+    return invokable()()()().getNumberOfInvocations()
 }
